@@ -1,0 +1,19 @@
+{
+  "name": "mongo_teste",
+  "version": "1.0.0",
+  "description": "Exercitando mongodb",
+  "repository": {
+    "type": "git",
+    "url": "NODE-ZR"
+  },
+  "license": "ISC",
+  "author": "Cayque Ferreira",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "mongodb": "^6.20.0"
+  }
+}
