@@ -1,5 +1,6 @@
 const { MongoClient } = require('mongodb');
-const URI = "mongodb+srv://cayqueferreira11_db_user:~B({g)2278ZH&vRX@cluster0.magvqfe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+require("dotenv").config();
+const URI = process.env.URI;
 const mongoClient = new MongoClient(URI);
 
 async function connect(){
@@ -25,23 +26,23 @@ async function getDataBases(){
 async function main(){
     await connect();
     await getDataBases();
-    await findListings(mongoClient, 100);
+    const quant = await mongoClient.db("sample_restaurants").collection("restaurants").countDocuments({"borough": "Bronx"});
+    console.log(quant);
+    //await findListings(mongoClient, 10000);
     mongoClient.close();
 
 };
 
 async function findListings(mongoclient, resultsLimit) { 
-    const cursor = mongoclient.db('sample_airbnb')
-     .collection('listingsAndReviews') 
-     .find() 
-     .limit(resultsLimit); 
+    const cursor = mongoclient.db('sample_restaurants')
+     .collection('restaurants')
+     .find({"borough": "Bronx"});
+     //.limit(resultsLimit); 
     const results = await cursor.toArray(); 
     if (results.length > 0) { 
         console.log(`Found ${results.length} listing(s):`); 
         results.forEach((result, i) => { 
-            console.log(`\n${i + 1}. Name: ${result.name}`); 
-            console.log(` Bedrooms: ${result.bedrooms}`); 
-            console.log(` Bathrooms: ${result.bathrooms}`); 
+            console.log(`\n${i + 1}. Endereço: ${result.borough}`); 
         });
     }
 };
